@@ -1,4 +1,5 @@
 <?php
+include_once 'ExcelTrait.php';
 /**
  * Author       : Gulzar Ali
  * Date         : 20 April 2021
@@ -6,6 +7,7 @@
  * Description  : Simple class to extend php file attributes to create and download xls files 
  */
 class Excel{
+    use ExcelTrait;
     protected $file_name;
     protected $fp;
 
@@ -21,7 +23,6 @@ class Excel{
 
         $header=$this->parseRow($header);
         $this->writeRow($header);
-               
 
         for($i=0;$i<sizeof($data);$i++){
             $row=$this->parseRow($data[$i]);
@@ -69,25 +70,3 @@ class Excel{
         readfile($this->file_name);
     }
 }
-
-/**
- * Example to extend functionality of the excel class
- */
-$file_name='example.xls';
-
-$excel=new Excel($file_name);
-/**
- * set required data
- */
-$header=['column 1','column 2','column 3'];
-$data=[
-    [
-        'value 11','value 21','value 31'
-    ],
-    [
-        'value 12','value 22','value 32'
-    ]
-];
-$excel->clear();
-$excel->writeExcel($header,$data);
-$excel->downloadExcel();

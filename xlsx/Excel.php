@@ -3,12 +3,12 @@ include_once 'ExcelTrait.php';
 /**
  * Author       : Gulzar Ali
  * Date         : 20 April 2021
- * Updated      : 20 April 2021
+ * Updated      : 21 April 2021
  * Description  : Simple class to extend php file attributes to create and download xls files 
  */
 class Excel{
     use ExcelTrait;
-    protected $file_name;
+    public $file_name;
     protected $fp;
 
     function __construct($file_name) {
@@ -23,7 +23,6 @@ class Excel{
 
         $header=$this->parseRow($header);
         $this->writeRow($header);
-
         for($i=0;$i<sizeof($data);$i++){
             $row=$this->parseRow($data[$i]);
             $this->writeRow($row);
@@ -33,7 +32,10 @@ class Excel{
      * convert record row array to  formated string
      */
     public function parseRow($row){
-        return implode("\t", array_values($row))."\n";
+        if(is_array($row)){
+            return implode("\t", array_values($row))."\n";
+        }
+        
     }
     /**
      * write down lines into the file
@@ -66,7 +68,15 @@ class Excel{
 		header('Expires: 0');
 		header('Cache-Control: must-revalidate');
 		header('Pragma: public');
+        try{
+            ob_clean();
+            ob_end_clean();
+            flush();
+        }
+        catch(Exception $e){
 
+        }
+        
         readfile($this->file_name);
     }
 }

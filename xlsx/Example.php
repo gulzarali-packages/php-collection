@@ -23,4 +23,4 @@ $data=[
 $excel->clear();
 $excel->writeExcel($header,$data);
 $excel->downloadExcel();
-$excel->deleteFile('example.xls');
+$excel->deleteFile();

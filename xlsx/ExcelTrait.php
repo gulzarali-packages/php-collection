@@ -4,7 +4,13 @@ trait ExcelTrait{
     /**
      * delete any file from server
      */
-    public function deleteFile($file_name){
-        unlink($file_name);
+    public function deleteFile(){
+        unlink($this->file_name);
+    }
+    /**
+     * convert associative array to simple array
+     */
+    public function toOneDArray($arr){
+
     }
 }
